@@ -4,7 +4,7 @@ const strTrim = str => str.trim()
 const splitCssVar = val => {
   const [name, value] = val.split(":").map(strTrim)
 
-  if (value.startsWith("calc")) return
+  if (value.startsWith("calc") || value.startsWith("var")) return
 
   const num = Number.parseFloat(value)
   if (Number.isNaN(num)) {
