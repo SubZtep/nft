@@ -34,10 +34,10 @@ body {
 
 @keyframes cube-move {
   from {
-    transform: translateZ(-500px);
+    transform: translateZ(-1000vh);
   }
   to {
-    transform: translateZ(1000px);
+    transform: translateZ(100vh);
   }
 }
 
@@ -46,10 +46,12 @@ body {
   --top-color: #20827e;
   --bottom-color: #b63833;
 
-  --scene-width: 300vw;
+  /* --scene-width: 300vw; */
   --scene-height: 200vh;
-  --scene-edge: 100px;
-  --scene-border: 20px;
+  --scene-width: calc(var(--scene-height) * 1.5);
+  /* --scene-edge: 100px; */
+  --scene-edge: calc(var(--scene-height) / 6);
+  --scene-border: 30px;
   --scene-angle: 90deg;
 
   --scene-edge-half: calc(var(--scene-edge) / 2);
@@ -125,53 +127,95 @@ body {
 }
 
 .cube {
-  --size: 200px;
-  --z: 100px;
+  position: absolute;
+  --edge-multi: 2;
+  --z: -100vh;
   --rot: 0deg;
+  --size: calc(var(--scene-edge) * var(--edge-multi));
+  /* --size: var(--scene-height); */
+  /* --size: calc(var(--scene-edge) * 2); */
   --half-size: calc(var(--size) / 2);
+  --quarter-size: calc(var(--size) / 4);
+  --octave-size: calc(var(--size) / 8);
 
   width: var(--size);
   height: var(--size);
-  background-color: #00f2;
+  background-color: #00f1;
 
-  /* position: absolute; */
   transform-style: preserve-3d;
-  /* transform-origin: center center; */
 
   transform: translateZ(var(--z)) rotate3d(1, 1, 1, var(--rot));
+
   /* animation-name: cube-move; */
-  animation-duration: 2s;
+  animation-duration: 4s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 
-  /* transform:
-    translate(calc(0px - var(--half-size)), calc(0px - var(--half-size)))
-    rotateX(var(--rotate-x-deg))
-    rotateY(var(--rotate-y-deg))
-    rotateZ(var(--rotate-z-deg)); */
+  --scene-border-half-half: calc(var(--scene-border-half) / 2);
 }
 
 .cube > div {
   position: absolute;
-  width: var(--size);
-  height: var(--size);
-  /* backface-visibility: visible; */
-  /* border: var(--border-width-px) solid #666; */
-  border: 2px solid red;
+  width: 100%;
+  height: 100%;
+  /* background-repeat: no-repeat; */
+  background-color: transparent;
+
+  /* background-size: calc(var(--size) - var(--scene-border)); */
+  /* background-position: var(--scene-border-half) var(--scene-border-half); */
+  /* box-shadow: 10px 5px 5px yellow; */
+  border-radius: var(--scene-border-half);
+  box-shadow: 0 0 var(--scene-border-half-half) var(--scene-border-half-half) red,
+    inset 0 0 var(--scene-border-half-half) var(--scene-border-half-half) red;
+  /* box-shadow: 0 0 var(--scene-border-half) var(--scene-border-half) red,
+  inset 0 0 var(--scene-border-half) var(--scene-border-half) red; */
+  /* background-image:
+    linear-gradient(
+      to right,
+      red 0,
+      transparent var(--scene-border-half),
+      transparent calc(var(--size) - var(--scene-border-half)),
+      red var(--size)),
+    linear-gradient(
+      to bottom,
+      red 0,
+      transparent var(--scene-border-half),
+      transparent calc(var(--size) - var(--scene-border-half)),
+      red var(--size)); */
+  /* background-image:
+    linear-gradient(
+      to right,
+      transparent 0,
+      red var(--scene-border-half),
+      transparent var(--scene-border),
+      transparent calc(var(--size) - var(--scene-border)),
+      red calc(var(--size) - var(--scene-border-half)),
+      transparent var(--size)),
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      red var(--scene-border-half),
+      transparent var(--scene-border),
+      transparent calc(var(--size) - var(--scene-border)),
+      red calc(var(--size) - var(--scene-border-half)),
+      transparent var(--size)); */
 }
 
+.cube.nr1 {
+  transform: translateZ(-100px);
+}
 
 .cube > .front {
   /* transform: rotateY(0deg) translateZ(calc(var(--half-size) + var(--border-width-px))); */
   /* border-color: red; */
-  transform: rotateY(0deg) translateZ(var(--half-size));
+  transform: rotateY(0deg) translateZ(var(--octave-size));
 }
 .cube > .right {
   /* transform: rotateY(90deg) translateZ(calc(var(--half-size) + var(--border-width-px))); */
   transform: rotateY(90deg) translateZ(var(--half-size));
 }
 .cube > .back {
-  transform: rotateY(180deg) translateZ(var(--half-size));
+  transform: rotateY(180deg) translateZ(var(--octave-size));
 }
 .cube > .left {
   transform: rotateY(-90deg) translateZ(var(--half-size));
