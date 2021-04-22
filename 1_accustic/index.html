@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Your title here</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:image" content="thumbnail.jpg" />
+    <link type="text/css" rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+
+      <div class="topper"></div>
+      <div class="shadow-top"></div>
+      <div class="botter"></div>
+      <!-- <div class="shadow-bottom"></div> -->
+
+    </div>
+
+    <script type="text/javascript" src="dat.gui.min.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    <script type="module">
+    import guiCSSVars from "./gui-css-vars.mjs"
+    let gui
+    document.addEventListener("DOMContentLoaded", () => {
+      gui = new dat.GUI()
+      guiCSSVars(gui)
+    })
+    </script>
+  </body>
+</html>

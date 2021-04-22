@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Your title here</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type="text/css">
+      :root {
+        --bgcolor: blue;
+        --color: green;
+        --radius: 1rem;
+        --edge: 1rem;
+
+        margin: 4px;
+      }
+
+      .container {
+        --bgcolor: red;
+
+        width: var(--edge);
+        height: var(--edge);
+        background-color: var(--bgcolor);
+        border: var(--edge) solid var(--color);
+        border-radius: var(--radius);
+      }
+
+      body {
+        background-color: darkred;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+    </div>
+
+    <button onclick="document.documentElement.style.setProperty('--edge', '10rem')">EDGE WIDTH DOC</button>
+    <button onclick="updateCSS()">EDGE WIDTH CSS</button>
+
+    <script src="dat.gui.min.js"></script>
+    <script>
+      let css = {}
+
+      function updateCSS() {
+        css["--edge"] = 6
+
+        // console.log(document.documentElement.style)
+        // console.log(getComputedStyle(document.querySelector(":root")))
+        // console.log(Object.getOwnPropertyDescriptors(getComputedStyle(document.querySelector(":root"))))
+        console.log(Object.getOwnPropertyDescriptors(getComputedStyle(document.documentElement)))
+        // console.log(getComputedStyle(document.querySelectorAll(":root")[0]))
+        // console.log(Object.getOwnPropertyDescriptors(document.documentElement))
+      }
+
+      // css = new Proxy(css, {
+      //   set(obj, prop, value) {
+      //     console.log({obj, prop, value})
+      //     obj[prop] = value
+      //     // console.log(typeof css[prop])
+      //     // root.style.setProperty(prop, `${value}${cssUnits.get(prop)}`)
+      //     return true
+      //   },
+      //   get(obj, prop) {
+      //     console.log(obj, prop)
+      //     return obj[prop]
+      //   }
+      // })
+
+      // console.log("XXX", window.getComputedStyle(document.documentElement))
+
+      const gui = new dat.GUI()
+      const folder = gui.addFolder("CSS Properties")
+      folder.open()
+
+      for (const { cssRules } of document.styleSheets) {
+        for (const cssRule of cssRules) {
+          const { selectorText, style, styleMap } = cssRule
+
+          let ruleFolder
+          let el
+
+          style.cssText.split(";").map(val => val.trim()).filter(val => val.startsWith("--")).forEach(val => {
+            const [name, value] = val.split(":").map(val => val.trim())
+            const num = Number.parseFloat(value)
+            if (Number.isNaN(num)) return
+            if (el === undefined) {
+              el = document.querySelector(selectorText)
+              ruleFolder = folder.addFolder(selectorText)
+              ruleFolder.open()
+            }
+            css[name] = num
+            const ctrl = ruleFolder.add(css, name)
+            //ctrl.listen()
+            ctrl.unit = value.slice(String(num).length)
+            ctrl.onChange(function(newVal) {
+              console.log("CHANGE", newVal)
+              el.style.setProperty(name, `${newVal}${this.unit}`)
+            })
+          })
+
+
+        }
+
+        //break
+      }
+
+     </script>
+
+  </body>
+</html>

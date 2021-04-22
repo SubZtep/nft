@@ -1,0 +1,1 @@
+css az akusztikus variansa a canvasozasnek, mert nincsen meg a totalis kontrol az animacio felett, nem tudom kockankent felvenni, maximum kepernyorogzitovel.

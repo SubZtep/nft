@@ -1,0 +1,150 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  /* overflow: hidden; */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-color: #262626;
+  --top-color: #20827e;
+  --bottom-color: #b63833;
+
+  --scene-edge: 100px;
+  --scene-border: 20px;
+  --scene-angle: 75deg;
+
+  --scene-edge-half: calc(var(--scene-edge) / 2);
+  --scene-border-half: calc(var(--scene-border) / 2);
+
+
+  --col-w: calc(calc(100vw / var(--cols)) * 2);
+  --col--px: calc(var(--col-w) - 25px);
+  --col--px2: calc(var(--col-w) + 25px);
+
+  --edge--px: calc(var(--edge) - 14px);
+  --halfEdge: calc(var(--edge) / 2);
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-color);
+  /* perspective: var(--perspective); */
+  /* transition: perspective-origin 200ms ease-out; */
+  /* perspective-origin: var(--perspectiveX) var(--perspectiveY); */
+
+  transform-style: preserve-3d;
+  position: absolute;
+  perspective: 500px;
+}
+
+@keyframes sidebgbottom {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 var(--scene-edge);
+  }
+}
+
+@keyframes sidebgtop {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 calc(0px - var(--scene-edge));
+  }
+}
+
+.topper {
+  position: absolute;
+  width: 300vw;
+  height: 200vh;
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      var(--top-color) 0,
+      transparent var(--scene-border-half),
+      transparent calc(var(--scene-edge) - var(--scene-border-half)),
+      var(--top-color) var(--scene-edge)),
+
+    repeating-linear-gradient(
+      to bottom,
+      var(--top-color) 0,
+      transparent var(--scene-border-half),
+      transparent calc(var(--scene-edge) - var(--scene-border-half)),
+      var(--top-color) var(--scene-edge))/*,
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--scene-edge-half) - var(--scene-border-half)),
+      var(--top-color) var(--scene-edge-half),
+      transparent calc(var(--scene-edge-half) + var(--scene-border-half)),
+      transparent var(--scene-edge))*/;
+  transform-origin: top;
+  transform: translateY(50vh) rotateX(-75deg);
+  animation-name: sidebgtop;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.botter {
+  position: absolute;
+  width: 300%;
+  height: 200%;
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      transparent 0,
+      transparent calc(var(--scene-edge-half) - var(--scene-border-half)),
+      var(--bottom-color) var(--scene-edge-half),
+      transparent calc(var(--scene-edge-half) + var(--scene-border-half)),
+      transparent var(--scene-edge)),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--scene-edge-half) - var(--scene-border-half)),
+      var(--bottom-color) var(--scene-edge-half),
+      transparent calc(var(--scene-edge-half) + var(--scene-border-half)),
+      transparent var(--scene-edge));
+  transform-origin: bottom;
+  transform: rotateX(75deg);
+  animation-name: sidebgbottom;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+
+.shadow-top {
+  position: absolute;
+  width: 300%;
+  height: 200%;
+  transform-origin: top;
+  transform: translateY(50vh) rotateX(-75deg);
+  background-image: linear-gradient(to bottom, transparent, var(--bg-color) 95%);
+}
+
+.shadow-bottom {
+  position: absolute;
+  width: 300%;
+  height: 200%;
+  transform-origin: bottom;
+  transform: rotateX(75deg);
+  background-image: linear-gradient(to top, transparent, var(--bg-color));
+}

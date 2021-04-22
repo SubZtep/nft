@@ -1,0 +1,22 @@
+{
+  "name": "accustic",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "postcss-nested": "^5.0.5",
+    "vite": "^2.1.5"
+  },
+  "postcss": {
+    "plugins": {
+      "postcss-nested": {}
+    }{
+      "plugins": {
+        "postcss-nested": {}
+      }
+    }
+  }
+}
