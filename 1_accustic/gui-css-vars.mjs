@@ -1,5 +1,6 @@
 const isCssVar = val => val.trimStart().startsWith("--")
 const strTrim = str => str.trim()
+const isColor = val => /^#[a-f0-9]{3,6}$/i.test(val)
 
 const splitCssVar = val => {
   const [name, value] = val.split(":").map(strTrim)
@@ -46,11 +47,11 @@ export default function (gui) {
 
           //console.log(name)
 
-          if (name.endsWith("color")) {
+          if (isColor(value)) {
             ctrl = ruleFolder.addColor(css, name)
           } else {
             ctrl = ruleFolder.add(css, name)
-            ctrl.step(1)
+            if (unit) ctrl.step(1)
           }
 
           //ctrl.listen()
