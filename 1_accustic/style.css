@@ -43,25 +43,30 @@ body {
 }
 
 :root {
-  --bg-color: #262626;
+  /* --bg-color: #262626;
   --top-color: #20827e;
   --bottom-color: #b63833;
   --cube-color: #8a0303;
-  --cube-bg-color: #8a030369;
+  --cube-bg-color: #8a030369; */
+  --bg-color: #001437;
+  --top-color: #7898fb;
+  --bottom-color: #5ce5d5;
+  --cube-color: #b8fbc3;
+  --cube-bg-color: #b8fbc369;
 
-  --scene-width: 400vw;
-  --scene-height: 200vh;
-  --scene-border: 30px;
-  --scene-angle: 90deg;
+  --matrix-width: 400vw;
+  --matrix-height: 200vh;
+  --matrix-border: 30px;
+  --matrix-angle: 90deg;
 
   --matrix-speed: 1000ms;
   --cube-speed: 12000ms;
 
   --perspective: 500px;
 
-  --scene-edge: calc(var(--scene-height) / 8);
-  --scene-edge-half: calc(var(--scene-edge) / 2);
-  --scene-border-half: calc(var(--scene-border) / 2);
+  --matrix-edge: calc(var(--matrix-height) / 8);
+  --matrix-edge-half: calc(var(--matrix-edge) / 2);
+  --matrix-border-half: calc(var(--matrix-border) / 2);
 }
 
 .container {
@@ -78,60 +83,35 @@ body {
     to bottom,
     var(--bg-color) 0%,
     var(--bg-color) 45%,
-    #222 50%,
+    #000f2c 50%,
     var(--bg-color) 55%,
     var(--bg-color) 100%
   );
 }
 
-.scene {
+.matrix {
   position: absolute;
-  width: var(--scene-width);
-  height: var(--scene-height);
-}
-
-.scene.top {
-  top: 0;
-  transform-origin: top;
-  transform: rotateX(calc(var(--scene-angle) * -1));
-  --matrix-pos: calc(var(--scene-edge) * -1);
-  --matrix-color: var(--top-color);
-}
-
-.scene.bottom {
-  bottom: 0;
-  transform-origin: bottom;
-  transform: rotateX(var(--scene-angle));
-  --matrix-color: var(--bottom-color);
-  --matrix-pos: var(--scene-edge);
-}
-
-.scene.top.shadow {
-  background-image: linear-gradient(to bottom, transparent 30%, var(--bg-color));
-  top: 1px;
-}
-
-.scene.bottom.shadow {
-  background-image: linear-gradient(to top, transparent 30%, var(--bg-color));
-  bottom: 1px;
-}
-
-.scene.matrix {
-  background-image: repeating-linear-gradient(
-      to right,
-      transparent 0,
-      transparent calc(var(--scene-edge-half) - var(--scene-border-half)),
-      var(--matrix-color) var(--scene-edge-half),
-      transparent calc(var(--scene-edge-half) + var(--scene-border-half)),
-      transparent var(--scene-edge)
+  width: var(--matrix-width);
+  height: var(--matrix-height);
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-color: var(--bg-color);
+  background-image: var(--matrix-shadow),
+  repeating-linear-gradient(
+    to right,
+    transparent 0,
+    transparent calc(var(--matrix-edge-half) - var(--matrix-border-half)),
+    var(--matrix-color) var(--matrix-edge-half),
+    transparent calc(var(--matrix-edge-half) + var(--matrix-border-half)),
+    transparent var(--matrix-edge)
     ),
     repeating-linear-gradient(
       to bottom,
       transparent 0,
-      transparent calc(var(--scene-edge-half) - var(--scene-border-half)),
-      var(--matrix-color) var(--scene-edge-half),
-      transparent calc(var(--scene-edge-half) + var(--scene-border-half)),
-      transparent var(--scene-edge)
+      transparent calc(var(--matrix-edge-half) - var(--matrix-border-half)),
+      var(--matrix-color) var(--matrix-edge-half),
+      transparent calc(var(--matrix-edge-half) + var(--matrix-border-half)),
+      transparent var(--matrix-edge)
     );
   animation-name: matrix-bg;
   animation-duration: var(--matrix-speed);
@@ -139,10 +119,28 @@ body {
   animation-iteration-count: infinite;
 }
 
+.matrix.top {
+  top: 0;
+  transform-origin: top;
+  transform: rotateX(calc(var(--matrix-angle) * -1));
+  --matrix-pos: calc(var(--matrix-edge) * -1);
+  --matrix-color: var(--top-color);
+  --matrix-shadow: linear-gradient(to bottom, transparent, var(--bg-color));
+}
+
+.matrix.bottom {
+  bottom: 0;
+  transform-origin: bottom;
+  transform: rotateX(var(--matrix-angle));
+  --matrix-color: var(--bottom-color);
+  --matrix-pos: var(--matrix-edge);
+  --matrix-shadow: linear-gradient(to bottom, var(--bg-color), transparent);
+}
+
 .cube {
   position: absolute;
   --edge-multi: 2;
-  --size: calc(var(--scene-edge) * var(--edge-multi));
+  --size: calc(var(--matrix-edge) * var(--edge-multi));
   --minus-size: calc(var(--size) * -1);
   --half-size: calc(var(--size) / 2);
   --minus-half-size: calc(var(--half-size) * -1);
@@ -159,8 +157,8 @@ body {
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 
-  --scene-border-quarter: calc(var(--scene-border) / 4);
-  --cube-from: calc((var(--scene-height) + var(--size)) * -1);
+  --matrix-border-quarter: calc(var(--matrix-border) / 4);
+  --cube-from: calc((var(--matrix-height) + var(--size)) * -1);
 }
 
 .cube > div {
@@ -168,9 +166,9 @@ body {
   opacity: 0;
   animation-name: cube-opacity;
   animation-delay: inherit;
-  animation-duration: var(--cube-speed);
+  animation-duration: inherit;
   animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+  animation-iteration-count: inherit;
 }
 
 .cube.nr1 {
@@ -190,9 +188,9 @@ body {
 .cube > .back {
   width: var(--size);
   height: var(--size);
-  border-radius: var(--scene-border-quarter);
-  box-shadow: 0 0 var(--scene-border-quarter) var(--scene-border-quarter) var(--cube-color),
-    inset 0 0 var(--scene-border-quarter) var(--scene-border-quarter) var(--cube-color);
+  border-radius: var(--matrix-border-quarter);
+  box-shadow: 0 0 var(--matrix-border-quarter) var(--matrix-border-quarter) var(--cube-color),
+    inset 0 0 var(--matrix-border-quarter) var(--matrix-border-quarter) var(--cube-color);
 }
 
 .cube > .front {
