@@ -19,7 +19,7 @@ let css = {}
 
 export default function (gui) {
   const folder = gui.addFolder("CSS Variables")
-  folder.open()
+  // folder.open()
 
   for (const { cssRules } of document.styleSheets) {
     // prettier-ignore
