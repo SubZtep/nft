@@ -26,11 +26,11 @@
   --matrix-width: calc(var(--width) * var(--matrix-width-multi));
   --matrix-height: calc(var(--height) * var(--matrix-height-multi));
 
-  --cube-border-radius: calc(var(--cube-border) * 4);
   --cube-edge: calc(var(--matrix-edge) * var(--cube-edge-multi));
+  --cube-border-radius: calc(var(--cube-border) * 4);
   --cube-edge-half: calc(var(--cube-edge) / 2);
-  --cube-edge-half-minus: calc(var(--cube-edge-half) * -1);
   --cube-edge-quarter: calc(var(--cube-edge) / 4);
+  --cube-edge-half-minus: calc(var(--cube-edge-half) * -1);
   --cube-edge-quarter-minus: calc(var(--cube-edge-quarter) * -1);
   --cube-edge-three-quarter: calc(var(--cube-edge-half) + var(--cube-edge-quarter));
   --cube-edge-three-quarter-minus: calc(var(--cube-edge-three-quarter) * -1);
@@ -72,11 +72,27 @@
 }
 
 @keyframes halu {
-  from {
+  0% {
     perspective: var(--perspective);
   }
-  to {
-    perspective: 1px;
+  25% {
+    perspective: 2px;
+    transform: rotateZ(0deg);
+  }
+  50% {
+    transform: rotateZ(360deg);
+  }
+}
+
+@keyframes off {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
@@ -84,11 +100,20 @@ html,
 body {
   margin: 0;
   padding: 0;
+  filter: blur(1px);
   width: var(--width);
   height: var(--height);
+  box-shadow: inset 0px 0px 69px 13px rgba(0, 0, 0, 1);
+  background-color: #8a0303;
+  background: linear-gradient(135deg, #02004b 25%, transparent 25%) -10px 0,
+    linear-gradient(225deg, #02004b 25%, transparent 25%) -10px 0, linear-gradient(315deg, #02004b 25%, transparent 25%),
+    linear-gradient(45deg, #02004b 25%, transparent 25%);
+  background-size: calc(2 * 10px) calc(2 * 10px);
+  overflow: hidden;
 }
 
 .container {
+  /* opacity: 0; */
   width: var(--width);
   height: var(--height);
   display: flex;
@@ -106,7 +131,8 @@ body {
     var(--bg-color) 55%,
     var(--bg-color) 100%
   );
-  animation: halu 10s ease-out 60s 2 alternate;
+  animation: halu 10s ease-out 1s 2 alternate,
+    off 5s step-start 13s;
 }
 
 .matrix {
@@ -176,15 +202,15 @@ body {
   animation-timing-function: ease-in-out;
 }
 
-.cube.nr2 {
+.cube:nth-child(4) {
   animation-delay: calc(var(--cube-speed) * 0.25);
 }
 
-.cube.nr3 {
+.cube:nth-child(5) {
   animation-delay: calc(var(--cube-speed) * 0.5);
 }
 
-.cube.nr4 {
+.cube:nth-child(6) {
   animation-delay: calc(var(--cube-speed) * 0.75);
 }
 
