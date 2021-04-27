@@ -4,6 +4,8 @@
 
 ## description
 
+no JS, CSS only; without full control evident code; unplugged canvas, acoustic render.
+
 ## tags
 
-beginning, html, css, glitch
+beginning, html, css, neon, matrix, glitch

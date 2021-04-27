@@ -100,16 +100,24 @@ html,
 body {
   margin: 0;
   padding: 0;
-  filter: blur(1px);
   width: var(--width);
   height: var(--height);
+  overflow: hidden;
+}
+
+.zigzag {
+  filter: blur(1px);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background-color: #8a0303;
   box-shadow: inset 0px 0px 69px 13px rgba(0, 0, 0, 1);
   background: linear-gradient(135deg, #02004b 25%, transparent 25%) -10px 0,
     linear-gradient(225deg, #02004b 25%, transparent 25%) -10px 0, linear-gradient(315deg, #02004b 25%, transparent 25%),
     linear-gradient(45deg, #02004b 25%, transparent 25%);
   background-size: calc(2 * 10px) calc(2 * 10px);
-  overflow: hidden;
 }
 
 .container {
