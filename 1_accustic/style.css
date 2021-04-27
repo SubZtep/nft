@@ -103,8 +103,8 @@ body {
   filter: blur(1px);
   width: var(--width);
   height: var(--height);
-  box-shadow: inset 0px 0px 69px 13px rgba(0, 0, 0, 1);
   background-color: #8a0303;
+  box-shadow: inset 0px 0px 69px 13px rgba(0, 0, 0, 1);
   background: linear-gradient(135deg, #02004b 25%, transparent 25%) -10px 0,
     linear-gradient(225deg, #02004b 25%, transparent 25%) -10px 0, linear-gradient(315deg, #02004b 25%, transparent 25%),
     linear-gradient(45deg, #02004b 25%, transparent 25%);
@@ -113,6 +113,7 @@ body {
 }
 
 .container {
+  box-sizing: border-box;
   /* opacity: 0; */
   width: var(--width);
   height: var(--height);
@@ -131,8 +132,7 @@ body {
     var(--bg-color) 55%,
     var(--bg-color) 100%
   );
-  animation: halu 10s ease-out 1s 2 alternate,
-    off 5s step-start 13s;
+  animation: halu 10s ease-out 1s 2 alternate, off 5s step-start 13s;
 }
 
 .matrix {
